@@ -199,7 +199,7 @@ namespace wapi {
 
 	void setClipboard(const FunctionCallbackInfo<Value>& args)  {
 		char *data = getChar(args, 0);
-		HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, strlen(data) + 1);
+		HANDLE hMem = GlobalAlloc(GMEM_MOVEABLE, strlen(data) + 1);
 		memcpy(GlobalLock(hMem), data, strlen(data) + 1);
 		GlobalUnlock(hMem);
 		OpenClipboard(NULL);
@@ -288,11 +288,8 @@ namespace wapi {
 		Isolate *isolate = args.GetIsolate();
 		string str;
 		getline(cin, str);
-		char *chr = new char[str.size() + 1];
-		memcpy(chr, str.c_str(), str.size() + 1);
-		args.GetReturnValue().Set(String::NewFromUtf8(isolate, chr));
+		args.GetReturnValue().Set(String::NewFromUtf8(isolate, str.c_str()));
 	}
-
 	void sleep(const FunctionCallbackInfo<Value>& args)  {
 		Sleep((DWORD)getUInt(args, 0) * 1000);
 	}
@@ -305,8 +302,24 @@ namespace wapi {
 		WaitForSingleObject(timer, INFINITE);
 		CloseHandle(timer);
 	}
-
+	void testGet(const FunctionCallbackInfo<Value>& args) {
+		Isolate *isolate = args.GetIsolate();
+		unsigned int long long i = 0x000000A2ED6B1580;
+		printf("Get int %I64d\n", i);
+		std::string str = to_string(i);
+		printf("Get str %s\n", str);
+		args.GetReturnValue().Set(String::NewFromUtf8(isolate, str.c_str()));
+	}
+	void testSet(const FunctionCallbackInfo<Value>& args) {
+		Isolate *isolate = args.GetIsolate();
+		string x = getString(args, 0);
+		printf("Set str %s\n", x);
+		unsigned int long long i = stoi(x.c_str());
+		printf("Set int %I64d\n", i);
+	}
 	void init(Local<Object> exports)  {
+		NODE_SET_METHOD(exports, "testGet", testGet);
+		NODE_SET_METHOD(exports, "testSet", testSet);
 		NODE_SET_METHOD(exports, "setWindowPos", setWindowPos);
 		NODE_SET_METHOD(exports, "getWindowRect", getWindowRect);
 		NODE_SET_METHOD(exports, "findWindow", findWindow);
