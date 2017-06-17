@@ -376,7 +376,7 @@ namespace opencv {
 		char *str = getChar(args, 0);
 		MatObject *obj = node::ObjectWrap::Unwrap<MatObject>(args[1]->ToObject());
 		vector<int> params = getArrayInt(args, 2, 3);
-		cv::imwrite(str, obj->index, params);
+		args.GetReturnValue().Set(cv::imwrite(str, obj->index, params));
 	}
 	void inRange(const FunctionCallbackInfo<Value> &args) {
 		MatObject *src = node::ObjectWrap::Unwrap<MatObject>(args[0]->ToObject());

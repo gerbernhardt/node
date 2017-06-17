@@ -225,13 +225,13 @@ namespace wapi {
 			obj->Set(String::NewFromUtf8(isolate, "x"), Number::New(isolate, point.x));
 			obj->Set(String::NewFromUtf8(isolate, "y"), Number::New(isolate, point.y));
 			args.GetReturnValue().Set(obj);
-		}
+		} else args.GetReturnValue().Set(false);
 	}
 
 	void setCursorPos(const FunctionCallbackInfo<Value>& args)  {
 		int x = getInt(args, 0);
-		int y = getInt(args, 0);
-		SetCursorPos(x, y);
+		int y = getInt(args, 1);
+		args.GetReturnValue().Set(SetCursorPos(x, y));
 	}
 
 	void getKeyState(const FunctionCallbackInfo<Value>& args) {

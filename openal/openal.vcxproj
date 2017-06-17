@@ -84,7 +84,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>../../libs/openal1.1/include;../../libs/node/src;../../libs/node/deps/uv/include;../../libs/node/deps/v8/include;$(IncludePath)</IncludePath>
+    <IncludePath>../../libs/;../../libs/node/src;../../libs/node/deps/uv/include;../../libs/node/deps/v8/include;$(IncludePath)</IncludePath>
     <TargetExt>.node</TargetExt>
     <LibraryPath>../../libs/;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
   </PropertyGroup>

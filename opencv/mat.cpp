@@ -117,9 +117,9 @@ namespace opencv {
 		for (int i = 0; i < rows; i++) {
 			Local<Array> subArray = Array::New(isolate, 3);
 			Vec3b pixel = thisObj->index.at<Vec3b>(x, i);
-			subArray->Set(0, Uint32::New(isolate, pixel[2]));
-			subArray->Set(1, Uint32::New(isolate, pixel[1]));
-			subArray->Set(2, Uint32::New(isolate, pixel[0]));
+			subArray->Set(0, Uint32::New(isolate, (float)pixel[2]));
+			subArray->Set(1, Uint32::New(isolate, (float)pixel[1]));
+			subArray->Set(2, Uint32::New(isolate, (float)pixel[0]));
 			array->Set(i, subArray);
 		}
 		args.GetReturnValue().Set(array);
@@ -133,9 +133,9 @@ namespace opencv {
 		for (int i = 0; i < cols; i++) {
 			Local<Array> subArray = Array::New(isolate, 3);
 			Vec3b pixel = thisObj->index.at<Vec3b>(i, y);
-			subArray->Set(0, Uint32::New(isolate, pixel[2]));
-			subArray->Set(1, Uint32::New(isolate, pixel[1]));
-			subArray->Set(2, Uint32::New(isolate, pixel[0]));
+			subArray->Set(0, Uint32::New(isolate, (float)pixel[2]));
+			subArray->Set(1, Uint32::New(isolate, (float)pixel[1]));
+			subArray->Set(2, Uint32::New(isolate, (float)pixel[0]));
 			array->Set(i, subArray);
 		}
 		args.GetReturnValue().Set(array);
@@ -145,11 +145,12 @@ namespace opencv {
 		MatObject *thisObj = node::ObjectWrap::Unwrap<MatObject>(args.Holder());
 		unsigned int x = args[0]->Uint32Value();
 		unsigned int y = args[1]->Uint32Value();
+		
 		Vec3b pixel = thisObj->index.at<Vec3b>(x, y);
 		Local<Array> array = Array::New(isolate, 3);
-		array->Set(0, Uint32::New(isolate, pixel[2]));
-		array->Set(1, Uint32::New(isolate, pixel[1]));
-		array->Set(2, Uint32::New(isolate, pixel[0]));
+		array->Set(0, Uint32::New(isolate, (float)pixel[2]));
+		array->Set(1, Uint32::New(isolate, (float)pixel[1]));
+		array->Set(2, Uint32::New(isolate, (float)pixel[0]));
 		args.GetReturnValue().Set(array);
 	}
 	void MatObject::SetPixel(const FunctionCallbackInfo<Value>& args) {
